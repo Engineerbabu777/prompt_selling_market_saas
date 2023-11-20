@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Navigation from './Navigation'
-import { AiOutlineSearch, CgProfile ,FaBars} from '@/icon/icons'
+import { AiOutlineSearch, CgProfile, FaBars } from '@/icon/icons'
 
 type Props = {
   activeItem: number
@@ -11,7 +11,7 @@ type Props = {
 
 function Header ({ activeItem }: Props) {
   const [active, setActive] = useState(false)
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   if (typeof window !== undefined) {
     window?.addEventListener('scroll', () => {
@@ -22,10 +22,18 @@ function Header ({ activeItem }: Props) {
       }
     })
   }
+
+  const handleClose = (e: React.MouseEvent) => {
+    const target = e.target as React.HTMLElement;
+    if (target.id === "screen") {
+      setOpen(!open);
+    }
+  };
+
   return (
     <div
       className={`w-full p-5 border-b min-h-[60px] border-b-[#ffffff32] transition-opacity ${
-        active && 'fixed top-0 left-0 bg-[#0000] z-[9999]'
+        active && 'fixed top-0 left-0 bg-black z-[9999]'
       }`}
     >
       <div className='hidden md:w-[90%] mx-auto md:flex items-center justify-between'>
@@ -62,10 +70,37 @@ function Header ({ activeItem }: Props) {
           </Link>
         </div>
 
-        <FaBars
-            className="text-2xl cursor-pointer"
-            // onClick={() => setOpen(!open)}
+        <div>
+          <FaBars
+            className='text-2xl cursor-pointer'
+            onClick={() => setOpen(!open)}
           />
+        </div>
+
+        {open && (
+          <>
+          <div
+            className="fixed md:hidden w-full h-screen top-0 left-0 z-[99999] bg-[unset]"
+            onClick={handleClose}
+            id="screen"
+          >
+            <div className="fixed bg-black h-screen top-0 right-0 w-[60%] z-[9999]">
+              <div className="mt-20 p-5">
+                <Navigation activeItem={activeItem} />
+                {/* TODO: */}
+                {/* {user && (
+                  <DropDown
+                    user={user}
+                    setOpen={setOpen}
+                    handleProfile={handleProfile}
+                    isSellerExist={isSellerExist}
+                  />
+                )} */}
+              </div>
+            </div>
+          </div>
+          </>
+        )}
       </div>
     </div>
   )
