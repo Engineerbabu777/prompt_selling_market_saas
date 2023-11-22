@@ -4,12 +4,14 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Navigation from './Navigation'
 import { AiOutlineSearch, CgProfile, FaBars } from '@/icon/icons'
+import { User } from '@clerk/nextjs/server'
 
 type Props = {
-  activeItem: number
+  activeItem: number;
+  user:User|null;
 }
 
-function Header ({ activeItem }: Props) {
+function Header ({ activeItem,user }: Props) {
   const [active, setActive] = useState(false)
   const [open, setOpen] = useState(false)
 
