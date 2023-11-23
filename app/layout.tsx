@@ -25,7 +25,7 @@ export default function RootLayout ({
       <html lang='en'>
         <body className={`${inter.variable} ${montserrat.variable}`}>
           <Provider>
-            <Toaster reverserOrder={false} position="top-center"/>
+            <Toaster reverseOrder={false} position="top-center"/>
             {children}
           </Provider>
         </body>

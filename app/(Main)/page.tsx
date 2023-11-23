@@ -14,6 +14,7 @@ import SellersBanner from '@/components/Shop/SellersBanner'
 import Footer from '@/components/Layout/Footer'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import Loader from '@/utils/Loader'
 
 export default function Page ({}) {
   const [user, setUser] = useState(null)
@@ -25,7 +26,7 @@ export default function Page ({}) {
       .get('/api/routes/me')
       .then(data => {
         setLoading(false)
-        setUser(data.data)
+        setUser(data?.data?.user)
         console.log({ data })
       })
       .catch(err => {
@@ -38,7 +39,9 @@ export default function Page ({}) {
   return (
     <>
       {loading ? (
-        <></>
+        <>
+        <Loader />
+        </>
       ) : (
         <>
           <div>
