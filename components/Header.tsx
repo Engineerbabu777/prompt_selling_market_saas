@@ -16,11 +16,10 @@ type Props = {
   handleProfile: any;
 }
 
-function Header ({ activeItem,user }: Props) {
+function Header ({ activeItem,user,isSellerExist }: Props) {
   const [active, setActive] = useState(false)
   const [open, setOpen] = useState(false)
   const [activeProfile, setActiveProfile] = useState(false);
-  const [isSellerExist, setIsSellerExists] = useState(false);
 
 
   if (typeof window !== undefined) {

@@ -27,12 +27,12 @@ const Page = (props: Props) => {
       const data = {
         name: shopData.name,
         description: shopData.description,
-        shopProductsType: shopData.shopProductsType,
+        shopProductTypes: shopData.shopProductsType,
         avatar: user?.imageUrl || "",
         userId: user?.id,
       };
       await axios
-        .post("/api/create-shop", data)
+        .post("/api/routes/shop/create-shop", data)
         .then((res) => {
           setLoading(false);
           toast.success("Shop created successfully!");

@@ -19,6 +19,8 @@ import Loader from '@/utils/Loader'
 export default function Page ({}) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [isSellerExist, setIsSellerExists] = useState(false);
+
 
   useEffect(() => {
     setLoading(true)
@@ -26,6 +28,7 @@ export default function Page ({}) {
       .get('/api/routes/me')
       .then(data => {
         setLoading(false)
+        setIsSellerExists(data.data.shop? true:false)
         setUser(data?.data?.user)
         console.log({ data })
       })
@@ -47,7 +50,7 @@ export default function Page ({}) {
           <div>
             <div className='banner'>
               {/* HEADER */}
-              <Header activeItem={0} user={user} />
+              <Header activeItem={0} user={user} isSellerExist={isSellerExist} />
               <Hero />
             </div>
 
