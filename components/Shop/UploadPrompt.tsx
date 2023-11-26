@@ -155,7 +155,7 @@ const UploadPrompt = (props: Props) => {
     setIsLoading(true);
     const categoryString = Array.from(category).join(",");
     await axios
-      .post("/api/upload-prompt", {
+      .post("/api/routes/prompt/upload-prompt", {
         ...promptData,
         category: categoryString,
         sellerId: userId,

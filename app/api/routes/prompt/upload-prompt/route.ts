@@ -8,9 +8,14 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     const user: User | null = await currentUser();
 
+    console.log("1")
+
     if (!data.images) {
       data.images = [];
     }
+
+    console.log("2")
+
 
     if (data.images && data.images.length > 0) {
       const validImages = data.images.filter(
@@ -21,6 +26,10 @@ export async function POST(req: NextRequest) {
       const uploadedImages = await Promise.all(
         validImages.map(async (image: string) => {
           const result = await cloudinary.uploader.upload(image);
+          console.log({result: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          }})
           return {
             create: {
               public_id: result.public_id,
@@ -36,19 +45,28 @@ export async function POST(req: NextRequest) {
         },
       };
     }
+    console.log("3")
 
     if (data.attachments && data.attachments.length > 0) {
       const uploadedAttachments = await Promise.all(
         data.attachments.map(async (attachment: string) => {
+          // const result = await cloudinary.uploader.upload
           const result = await cloudinary.uploader.upload(attachment, {
             resource_type: "auto",
           });
+          console.log({result: {
+            public_id: result.public_id,
+            url: result.secure_url,
+          }})
           return { public_id: result.public_id, url: result.secure_url };
         })
       );
       data.promptUrl = uploadedAttachments;
       delete data.attachments;
     }
+
+    console.log("4")
+
 
     data.estimatedPrice = parseFloat(data.estimatedPrice);
     data.price = parseFloat(data.price);
@@ -57,6 +75,8 @@ export async function POST(req: NextRequest) {
     delete data.promptUrl;
 
     const sellerId = user?.id;
+
+    console.log("5")
 
     const newPrompt = await prisma.prompts.create({
       data: {
@@ -73,6 +93,8 @@ export async function POST(req: NextRequest) {
         sellerId,
       },
     });
+    console.log("6")
+
 
     return NextResponse.json(newPrompt);
   } catch (error) {
