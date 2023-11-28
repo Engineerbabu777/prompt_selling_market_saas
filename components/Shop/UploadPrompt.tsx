@@ -153,6 +153,7 @@ const UploadPrompt = (props: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    console.log('1')
     const categoryString = Array.from(category).join(",");
     await axios
       .post("/api/routes/prompt/upload-prompt", {
@@ -192,7 +193,7 @@ const UploadPrompt = (props: Props) => {
         Upload Your Prompt
       </h1>
       <br />
-      <form className="w-[90%] m-auto" onSubmit={handleSubmit}>
+      <form className="w-[90%] m-auto" onSubmit={handleSubmit} noValidate>
         <Input
           type="text"
           label="Title"
@@ -305,6 +306,7 @@ const UploadPrompt = (props: Props) => {
             type="file"
             required
             accept="image/*"
+            name="images"
             multiple
             id="file"
             className="hidden"
@@ -346,6 +348,7 @@ const UploadPrompt = (props: Props) => {
             type="file"
             required
             accept=".txt, .pdf"
+            name="files"
             multiple
             id="attachment"
             className="hidden"

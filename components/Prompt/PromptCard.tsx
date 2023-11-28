@@ -1,12 +1,29 @@
 'use client'
 
+import { getShopById } from '@/actions/shop/getShopById'
 import Ratings from '@/utils/Ratings'
 import { styles } from '@/utils/styles'
-import { Card, Divider,Avatar } from '@nextui-org/react'
+import { Card, Divider, Avatar } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
-export default function PromptCard ({}) {
+type Props = {
+  prompts: any
+}
+export default function PromptCard ({ prompts }: Props) {
+  const [shopData, setShopData] = useState<any>(null)
+  useEffect(() => {
+    if (prompts) {
+      getShopInfo()
+    }
+  }, [prompts])
+
+  const getShopInfo = async () => {
+    const data = await getShopById({ shopId: prompts?.sellerId })
+    setShopData(data)
+  }
+
   return (
     <>
       <Card
@@ -43,7 +60,7 @@ export default function PromptCard ({}) {
 
         <div className='w-full flex justify-between py-2'>
           <h3 className={` font-Inter font-[500] text-[18px] text-white`}>
-            Animal Prompts
+            {prompts?.name}
           </h3>
           <p className={`text-[18px] font-[400] text-[#b1b0b6] font-Inter `}>
             $25.00
@@ -54,16 +71,18 @@ export default function PromptCard ({}) {
 
         <div className='w-full flex items-center justify-between'>
           <div className='flex items-center'>
-            <Avatar 
-            src={'https://lh3.googleusercontent.com/-_NKuepDPf3c/AAAAAAAAAAI/AAAAAAAAAAA/AFNEGgLXvpmcITtFpWK03AZ5jxMqMU2lgQ/photo.jpg?sz=46'}
-             />
+            <Avatar
+              src={
+                'https://lh3.googleusercontent.com/-_NKuepDPf3c/AAAAAAAAAAI/AAAAAAAAAAA/AFNEGgLXvpmcITtFpWK03AZ5jxMqMU2lgQ/photo.jpg?sz=46'
+              }
+            />
             <span
               className={`text-[16px] text-[#b1b0b6] font-Inter font-[500] pl-3`}
             >
-              @{'rajubhai'}
+              @{shopData?.name}
             </span>
           </div>
-          <Ratings rating={3} />
+          <Ratings rating={prompts?.rating} />
         </div>
         <br />
         <Link href={`/prompt/${'323'}`} className='w-full'>
