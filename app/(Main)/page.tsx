@@ -9,7 +9,6 @@ const Page = async () => {
   const data = await getUser();
   const promptsData = await getAllPrompts();
 
-  console.log({data});
 
   return (
     <div>

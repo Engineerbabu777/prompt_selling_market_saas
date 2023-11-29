@@ -13,16 +13,23 @@ type Props = {
 }
 export default function PromptCard ({ prompts }: Props) {
   const [shopData, setShopData] = useState<any>(null)
-  useEffect(() => {
-    if (prompts) {
-      getShopInfo()
-    }
-  }, [prompts])
+
+  console.log("hello")
+  console.log({prompts})
 
   const getShopInfo = async () => {
+    console.log(1)
     const data = await getShopById({ shopId: prompts?.sellerId })
+    console.log({data});
     setShopData(data)
   }
+  useEffect(() => {
+    if (prompts?.sellerId) {
+      getShopInfo()
+    }
+  }, [prompts?.sellerId])
+
+
 
   return (
     <>
@@ -32,7 +39,7 @@ export default function PromptCard ({ prompts }: Props) {
       >
         <div className='relative'>
           <Image
-            src={'https://pixner.net/aikeu/assets/images/category/fourteen.png'}
+            src={prompts?.images[0]?.url}
             alt=''
             className='w-full !max-h-[200px] object-cover'
             width={300}
@@ -52,7 +59,7 @@ export default function PromptCard ({ prompts }: Props) {
               <span
                 className={`text-[16px] font-Inter font-[500] pl-2 text-white`}
               >
-                Chatgpt
+                {prompts?.category}
               </span>
             </div>
           </div>
@@ -63,7 +70,7 @@ export default function PromptCard ({ prompts }: Props) {
             {prompts?.name}
           </h3>
           <p className={`text-[18px] font-[400] text-[#b1b0b6] font-Inter `}>
-            $25.00
+            ${prompts?.price}
           </p>
         </div>
 
@@ -73,7 +80,7 @@ export default function PromptCard ({ prompts }: Props) {
           <div className='flex items-center'>
             <Avatar
               src={
-                'https://lh3.googleusercontent.com/-_NKuepDPf3c/AAAAAAAAAAI/AAAAAAAAAAA/AFNEGgLXvpmcITtFpWK03AZ5jxMqMU2lgQ/photo.jpg?sz=46'
+               shopData?.avatar || 'https://lh3.googleusercontent.com/-_NKuepDPf3c/AAAAAAAAAAI/AAAAAAAAAAA/AFNEGgLXvpmcITtFpWK03AZ5jxMqMU2lgQ/photo.jpg?sz=46'
               }
             />
             <span
@@ -85,7 +92,7 @@ export default function PromptCard ({ prompts }: Props) {
           <Ratings rating={prompts?.rating} />
         </div>
         <br />
-        <Link href={`/prompt/${'323'}`} className='w-full'>
+        <Link href={`/prompt/${prompts?.id}`} className='w-full'>
           <div
             className={`text-[18px] p-5 font-Inter rounded-[8px] !py-2 !px-3 text-center mb-3 w-full text-white bg-transparent border border-[#16c252] hover:bg-[#16c252] hover:text-black duration-300 transition-opacity font-Inter font-[600]`}
           >

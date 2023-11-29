@@ -26,6 +26,8 @@ const RoutePage = ({ user, isSellerExist, promptsData }: Props) => {
   const [prompts, setPrompts] = useState<any>();
   const [loading, setLoading] = useState(true);
 
+  // console.log({promptsData})
+
   const fetchPromptsData = async () => {
     // setLoading(true);
     // try {
@@ -76,9 +78,9 @@ const RoutePage = ({ user, isSellerExist, promptsData }: Props) => {
             </h1>
             <div className="w-full flex flex-wrap mt-5">
                 {
-                    promptsData && promptsData?.map((data:any) => (<>
-                    <PromptCard prompt={data} />
-                    </>))
+                    promptsData?.length>0 && promptsData?.map((data:any,ind:number) => (
+                    <PromptCard key={ind} prompts={data} />
+                    ))
                 }
             </div>
             <br />

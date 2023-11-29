@@ -29,6 +29,7 @@ export async function getAllPrompts(pageNumber=1,pageSize=8) {
       },
     });
 
+
     // const totalPrompts: any = await prisma.prompts.findMany({
     //   where: {
     //     status: "Live",
@@ -58,7 +59,7 @@ export async function getAllPrompts(pageNumber=1,pageSize=8) {
     //   }
     // }
 
-    return NextResponse.json({ prompts });
+    return { prompts:JSON.parse(JSON.stringify(prompts)) };
   } catch (error) {
     console.log("get prompts error", error);
     return new NextResponse("Internal Error", { status: 500 });
