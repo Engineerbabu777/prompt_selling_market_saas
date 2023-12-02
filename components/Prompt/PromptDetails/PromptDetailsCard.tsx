@@ -11,6 +11,7 @@ import { Elements } from "@stripe/react-stripe-js";
 // import CheckoutForm from "./CheckoutForm";
 
 import { IoCloseOutline } from 'react-icons/io5'
+import CheckoutForm from './CheckoutForm'
 
 const PromptDetailsCard = ({
   promptData,
@@ -145,7 +146,7 @@ const PromptDetailsCard = ({
               />
             </div>
             <div className='w-full'>
-              {/* {stripePromise && clientSecret && (
+              {stripePromise && clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
                   <CheckoutForm
                     setOpen={setOpen}
@@ -153,7 +154,7 @@ const PromptDetailsCard = ({
                     promptData={promptData}
                   />
                 </Elements>
-              )} */}
+              )}
             </div>
           </div>
         </div>

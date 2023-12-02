@@ -57,7 +57,7 @@ const PromptDetailsPage = ({
       if (publishAbleKey) {
         const amount = Math.round(prompt.price * 100);
         newPaymentIntent({ amount });
-        // setStripePromise(loadStripe(publishAbleKey));
+        setStripePromise(loadStripe(publishAbleKey));
       }
     }
   }, [publishAbleKey, prompt]);
@@ -73,9 +73,9 @@ const PromptDetailsPage = ({
 
   return (
     <>
-      {/* {loading && !prompt ? (
+      {loading && !prompt ? (
         <Loader />
-      ) : ( */}
+      ) : (
         <div>
           <div className="shop-banner">
             <Header activeItem={2} user={user} isSellerExist={isSellerExist} />
@@ -93,7 +93,7 @@ const PromptDetailsPage = ({
             </div>
           </div>
         </div>
-      {/* )} */}
+       )}
     </>
   );
 };

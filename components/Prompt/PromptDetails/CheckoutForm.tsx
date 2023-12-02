@@ -1,4 +1,4 @@
-// import { newOrder } from "@/actions/orders/createOrder";
+import { newOrder } from "@/actions/orders/createOrder";
 import { getUser } from '@/actions/user/getUser'
 import { styles } from '@/utils/styles'
 import {
@@ -8,6 +8,7 @@ import {
   useStripe
 } from '@stripe/react-stripe-js'
 import React, { useState } from 'react'
+import {useUser} from '@clerk/nextjs';
 
 const CheckoutForm = ({
   setOpen,
@@ -19,32 +20,41 @@ const CheckoutForm = ({
   promptData: any
 }) => {
   const [message, setMessage] = useState<any>('')
-  const stripe = useStripe()
-  const elements = useElements()
+  // const stripe = useStripe()
+  // const elements = useElements()
+  // const user = useUser()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     const userData = await getUser();
-    //     if (!stripe || !elements) {
-    //       return;
-    //     }
-    //     const { error, paymentIntent } = await stripe.confirmPayment({
-    //       elements,
-    //       redirect: "if_required",
-    //     });
-    //     if (error) {
-    //       setMessage(error.message);
-    //     } else if (paymentIntent && paymentIntent.status === "succeeded") {
-    //       await newOrder({
-    //         userId: userData?.user?.id!,
-    //         promptId: promptData.id,
-    //         payment_id: paymentIntent.id,
-    //         payment_method: paymentIntent.id!,
-    //       }).then((res) => {
-    //         setOpen(!open);
-    //         window.location.reload();
-    //       });
-    //     }
+        e.preventDefault();
+console.log('helloe')
+        const user = await getUser()
+        if(user?.id){
+        await newOrder({
+          userId: user?.id,
+          promptId: promptData.id,
+          payment_id: Math.floor(Math.random()*895634191).toString(),
+          payment_method: "visa",
+        }).then((res) => {
+          setOpen(!open);
+          window.location.reload();
+        });
+        alert('ok')
+
+        }
+        // const userData = await getUser();
+        // if (!stripe || !elements) {
+        //   return;
+        // }
+        // const { error, paymentIntent } = await stripe.confirmPayment({
+        //   elements,
+        //   redirect: "if_required",
+        // });
+        // if (error) {
+        //   setMessage(error.message);
+        // } else if (paymentIntent && paymentIntent.status === "succeeded") {
+          // alert('success');
+          
+        // }
   }
 
   return (
